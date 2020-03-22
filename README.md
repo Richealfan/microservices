@@ -400,7 +400,7 @@ java -jar hello-service-0.0.1-SNAPSHOT.jar --spring.profiles.active=002
 
 ---
 
-从以上两个注册中心的控制台都可以看出，hello-service 都成功注册了服务。
+从以上两个注册中心的控制台都可以看出，hello-service 两个实例都成功注册给了两个注册中心。
 
 ### 启动 hello-app 测试程序
 
