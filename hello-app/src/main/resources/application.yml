@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: hello-app
+
+eureka:
+  client:
+    register-with-eureka: false
