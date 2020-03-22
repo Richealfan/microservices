@@ -9,8 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>service-registry-1</artifactId>
-
+    <artifactId>service-registry</artifactId>
 
     <dependencies>
         <dependency>
