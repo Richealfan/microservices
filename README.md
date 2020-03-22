@@ -98,7 +98,8 @@ Spring Cloud 的服务注册与发现是基于 ***Eureka*** 组件实现的，�
 注册中心（Eureka-Server），提供服务注册与发现的能力，是 Eureka 的服务端。
 基于高可用原则，下面我们也会启动两个实例用于测试，故编写了两套不同的配置。
 
--   pom 文件配置
+- pom 文件配置
+
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
@@ -122,7 +123,8 @@ Spring Cloud 的服务注册与发现是基于 ***Eureka*** 组件实现的，�
 </project>
 ```
 
--   Application 入口程序，跟以往不同的是需要加上注解：@EnableEurekaServer
+- Application 入口程序，跟以往不同的是需要加上注解：@EnableEurekaServer
+
 ```java
 package org.richsoftware.microservices.registry;
 
@@ -140,7 +142,7 @@ public class Application {
 
 ```
 
--   application.yml 通用配置
+- application.yml 通用配置
 
 ```YAML
 spring:
@@ -156,13 +158,15 @@ eureka:
     service-url:
       defaultZone: http://localhost:8761/eureka,http://localhost:8762/eureka
 ```
--   application-001.yml 第一个实例配置
+
+- application-001.yml 第一个实例配置
 
 ```YAML
 server:
   port: 8761
 ```
--   application-002.yml 第二个实例配置
+
+- application-002.yml 第二个实例配置
 
 ```YAML
 server:
@@ -174,7 +178,7 @@ server:
 基础服务组件，提供HTTP服务接口，是 Eureka 的客户端，将自己注册给注册中心。
 基于高扩展性原则，下面我们启动两个实例用于测试服务发现的负载均衡。
 
--   pom 文件配置
+- pom 文件配置
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -204,7 +208,7 @@ server:
 </project>
 ```
 
--   Application 入口程序
+- Application 入口程序
 
 ```java
 package org.richsoftware.microservices.service;
@@ -220,7 +224,7 @@ public class Application {
 }
 ```
 
--   HelloController ，我们加入一个配置变量，以便请求时知道是调用了哪个服务实例
+- HelloController ，我们加入一个配置变量，以便请求时知道是调用了哪个服务实例
 
 ```java
 package org.richsoftware.microservices.service.controller;
@@ -241,7 +245,7 @@ public class HelloController {
 }
 ```
 
--   application.yml，设置 spring.application.name: hello-service，这个是服务发现里面的服务名
+- application.yml，设置 spring.application.name: hello-service，这个是服务发现里面的服务名
 
 ```yaml
 spring:
@@ -256,7 +260,7 @@ eureka:
 instanceName: hello-service
 ```
 
--   application-001.yml，监听 9091 端口，并设置实例名称为：hello-service-001
+- application-001.yml，监听 9091 端口，并设置实例名称为：hello-service-001
 
 ```yaml
 server:
@@ -265,7 +269,7 @@ server:
 instanceName: hello-service-001
 ```
 
--   application-002.yml，监听 9092 端口，并设置实例名称为：hello-service-002
+- application-002.yml，监听 9092 端口，并设置实例名称为：hello-service-002
 
 ```yaml
 server:
@@ -278,7 +282,7 @@ instanceName: hello-service-002
 
 服务调用方也是 Eureka 的客户端，如果不提供服务，可以不需要将自己注册给注册中心。
 
--   pom 文件配置
+- pom 文件配置
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -308,7 +312,7 @@ instanceName: hello-service-002
 </project>
 ```
 
--   Application 程序入口，作为 HTTP 调用方，我们使用了 RestTemplate 实例，并配置了 @Bean、@LoadBalanced 等注解
+- Application 程序入口，作为 HTTP 调用方，我们使用了 RestTemplate 实例，并配置了 @Bean、@LoadBalanced 等注解
 
 ```java
 package org.richsoftware.microservices.app;
@@ -334,7 +338,7 @@ public class Application {
 
 ```
 
--   单元测试入口，跟以往不同的是，我们请求的服务地址已不再是真实的地址，而是服务名地址：http://hello-service/hello
+- 单元测试入口，跟以往不同的是，我们请求的服务地址已不再是真实的地址，而是服务名地址：http://hello-service/hello
 
 ```java
 package org.richsoftware.microservices.app;
@@ -368,31 +372,32 @@ public class ApplicationTest {
 
 ### 打包程序
 
--   进入 microservices 工程所在的根目录，执行 maven 命令，如下 
+- 进入 microservices 工程所在的根目录，执行 maven 命令，如下 
 
-```shell script
-mvn install 
+```
+mvn install
 ```
 
 ### 启动 service-registry 两个实例
 
-```shell script
+```
 java -jar service-registry-1-0.0.1-SNAPSHOT.jar --spring.profiles.active=001
 ```
 
-```shell script
+```
 java -jar service-registry-1-0.0.1-SNAPSHOT.jar --spring.profiles.active=002
 ```
 
 ### 启动 hello-service 两个实例
 
-```shell script
+```
 java -jar hello-service-0.0.1-SNAPSHOT.jar --spring.profiles.active=001
 ```
 
-```shell script
+```
 java -jar hello-service-0.0.1-SNAPSHOT.jar --spring.profiles.active=002
 ```
+
 ---
 ![registry-001](./service-registry-001.png)
 
